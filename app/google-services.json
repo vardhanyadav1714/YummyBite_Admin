@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039254950320",
+    "project_id": "yummy-bite-admin",
+    "storage_bucket": "yummy-bite-admin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039254950320:android:0c5f8f288c8c0382d30675",
+        "android_client_info": {
+          "package_name": "com.example.yummybiteadmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPNkiiw4yJ7A3fUnFfkAAjVeoTThiPgy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
