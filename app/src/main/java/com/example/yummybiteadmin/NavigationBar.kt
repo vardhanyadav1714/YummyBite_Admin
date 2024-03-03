@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,6 +45,7 @@ class YummyBitesActions(navController: NavController) {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun YourMainScreen() {
     val navController = rememberNavController()

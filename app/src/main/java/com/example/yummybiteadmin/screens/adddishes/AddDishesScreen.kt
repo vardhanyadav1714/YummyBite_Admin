@@ -69,7 +69,7 @@ fun AddDishScreen(
     var dishName by remember { mutableStateOf(TextFieldValue(text = foodDetails?.name ?: "")) }
     var priceText by remember { mutableStateOf(TextFieldValue(text = foodDetails?.price ?: "")) }
     var availability by remember { mutableStateOf(foodDetails?.availability ?: true) }
-    var dishImageUri by remember { mutableStateOf<Uri?>(null) }
+    val dishImageUri by remember { mutableStateOf<Uri?>(null) }
     var selectedVendor by remember { mutableStateOf("") }
 
     // Access the local context within the @Composable function
@@ -124,71 +124,71 @@ fun AddDishScreen(
         }
 
         // Select Food Image Heading
-        Text(
-            text = "Select Food Image",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-        )
+//        Text(
+//            text = "Select Food Image",
+//            fontSize = 18.sp,
+//            fontWeight = FontWeight.Bold,
+//            modifier = Modifier
+//                .padding(bottom = 16.dp)
+//        )
 
         // Select Food Image Heading
         var imageUri by remember { mutableStateOf<Uri?>(null) }
         var placeholderImageUrl =
             "https://www.google.com/imgres?imgurl=https%3A%2F%2Fi0.wp.com%2Fpost.healthline.com%2Fwp-content%2Fuploads%2F2020%2F07%2F1296x728-header.jpg%3Fw%3D1155%26h%3D1528&tbnid=D2pYI6eClCZl7M&vet=12ahUKEwjl_OHSufSCAxXB9qACHdEDA5oQMygaegUIARCvAQ..i&imgrefurl=https%3A%2F%2Fwww.healthline.com%2Fnutrition%2Fis-thai-food-healthy&docid=kdRMbfm6anNPcM&w=1155&h=648&q=food%20images&ved=2ahUKEwjl_OHSufSCAxXB9qACHdEDA5oQMygaegUIARCvAQ"
 
-        Card(
-            modifier = Modifier
-                .height(50.dp)
-                .width(50.dp)
-                .padding(bottom = 16.dp)
-                .clickable {
-                    // Open the image picker dialog when clicked
-                    showImagePickerDialog(context) { uri ->
-                        imageUri = uri
-                    }
-                },
-            elevation = 4.dp,
-            shape = MaterialTheme.shapes.medium
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                // Display Image or Placeholder
-                imageUri?.let {
-                    Image(
-                        painter = rememberImagePainter(data = it),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(MaterialTheme.shapes.medium),
-                        contentScale = ContentScale.Crop
-                    )
-                } ?: run {
-                    // Placeholder or Icon
-                    Image(
-                        painter = rememberImagePainter(data = placeholderImageUrl),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(MaterialTheme.shapes.medium),
-                        contentScale = ContentScale.Crop
-                    )
-                }
-                // Add an icon or text to indicate image selection
-                // For example, you can use an icon from Icons.Default.Add
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Image",
-                    tint = MaterialTheme.colors.primary,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .align(Alignment.Center)
-                )
-            }
-        }
+//        Card(
+//            modifier = Modifier
+//                .height(50.dp)
+//                .width(50.dp)
+//                .padding(bottom = 16.dp)
+//                .clickable {
+//                    // Open the image picker dialog when clicked
+//                    showImagePickerDialog(context) { uri ->
+//                        imageUri = uri
+//                    }
+//                },
+//            elevation = 4.dp,
+//            shape = MaterialTheme.shapes.medium
+//        ) {
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .background(MaterialTheme.colors.background)
+//            ) {
+//                // Display Image or Placeholder
+//                imageUri?.let {
+//                    Image(
+//                        painter = rememberImagePainter(data = it),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .clip(MaterialTheme.shapes.medium),
+//                        contentScale = ContentScale.Crop
+//                    )
+//                } ?: run {
+//                    // Placeholder or Icon
+//                    Image(
+//                        painter = rememberImagePainter(data = placeholderImageUrl),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .clip(MaterialTheme.shapes.medium),
+//                        contentScale = ContentScale.Crop
+//                    )
+//                }
+//                // Add an icon or text to indicate image selection
+//                // For example, you can use an icon from Icons.Default.Add
+//                Icon(
+//                    imageVector = Icons.Default.Add,
+//                    contentDescription = "Add Image",
+//                    tint = MaterialTheme.colors.primary,
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                        .align(Alignment.Center)
+//                )
+//            }
+//        }
 
 
         // Vendor Selection Dropdown
@@ -214,6 +214,7 @@ fun AddDishScreen(
                         imageUrl = dishImageUri?.toString() ?: placeholderImageUrl,
                         availability = availability,
                         vendor = selectedVendor
+
                     )
 
                     viewModel.saveDishToFirebase(newDish)

@@ -31,6 +31,7 @@ import com.example.yummybiteadmin.model.Food
 import com.example.yummybiteadmin.screens.adddishes.AddDishScreen
 import com.example.yummybiteadmin.screens.adddishes.AddDishViewModel
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
@@ -87,7 +88,7 @@ fun HomeScreen(onDishClicked: (Food) -> Unit) {
         if (user != null) {
             // Fetch dishes from Firestore
             val db = FirebaseFirestore.getInstance()
-            val dishesCollection = db.collection("users").document(user.uid).collection("dishes")
+            val dishesCollection = db.collection("dishes").document(user.uid).collection("user_dishes")
 
             dishesCollection.addSnapshotListener { value, error ->
                 if (error != null) {
@@ -96,12 +97,31 @@ fun HomeScreen(onDishClicked: (Food) -> Unit) {
                 }
 
                 if (value != null) {
-                    val newFoodList = value.toObjects(Food::class.java)
-                    foodList = newFoodList
+                    for (change in value.documentChanges) {
+                        when (change.type) {
+                            DocumentChange.Type.ADDED -> {
+                                // Handle added document
+                                val newFood = change.document.toObject(Food::class.java)
+                                foodList = foodList + newFood
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                // Handle modified document
+                                val modifiedFood = change.document.toObject(Food::class.java)
+                                foodList = foodList.map { if (it.name == modifiedFood.name) modifiedFood else it }
+                            }
+                            DocumentChange.Type.REMOVED -> {
+                                // Handle removed document
+                                val removedFood = change.document.toObject(Food::class.java)
+                                foodList = foodList.filter { it.name != removedFood.name }
+                            }
+                        }
+                    }
                 }
             }
+
         }
     }
+
 
     Column(
         modifier = Modifier
